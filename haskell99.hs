@@ -32,6 +32,23 @@ myReverse xs = (last xs) : (myReverse (init xs))
 
 -- Problem 06: Determine if a list is a palindrome
 isPalindrome :: (Eq a) => [a] -> Bool
-isPalindrome [] = True
-isPalindrome [_] = True
-isPalindrome xs = ((head xs) == (last xs)) && (isPalindrome (tail (init xs)))
+isPalindrome []   = True
+isPalindrome [_]  = True
+isPalindrome xs   = ((head xs) == (last xs)) && (isPalindrome (tail (init xs)))
+
+-- Problem 07: Flatten a nested list structure
+data NestedList a = Elem a | List [NestedList a]
+
+flatten :: NestedList a -> [a]
+flatten (Elem x)      = [x]
+flatten (List [])     = []
+flatten (List (x:xs)) = flatten x ++ flatten (List xs)
+
+-- Problem 08: Eliminate consecutive duplicates of list elements
+compress :: (Eq a) => [a] -> [a]
+compress []       = []
+compress [x]      = [x]
+compress (x:y:xs) =
+  if (x == y)
+    then compress(y:xs)
+    else x : (compress(y:xs))
