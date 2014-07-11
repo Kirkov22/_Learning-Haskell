@@ -28,4 +28,10 @@ myLength (_:xs) = 1 + myLength xs
 -- Problem 05: Reverse a list
 myReverse :: [a] -> [a]
 myReverse [] = []
-myReverse x = (last x) : (myReverse (init x))
+myReverse xs = (last xs) : (myReverse (init xs))
+
+-- Problem 06: Determine if a list is a palindrome
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome [] = True
+isPalindrome [_] = True
+isPalindrome xs = ((head xs) == (last xs)) && (isPalindrome (tail (init xs)))
