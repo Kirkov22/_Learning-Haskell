@@ -1,4 +1,4 @@
-{-  Exercises from 99 Haskell Problems
+{-  Exercises 01-10 from 99 Haskell Problems
     http://www.haskell.org/haskellwiki/H-99:_Ninety-Nine_Haskell_Problems
 -}
 
@@ -70,3 +70,7 @@ pack list@(x:xs) =
   if (x == head (head $ pack xs))
     then (x:(head $ pack xs)):(tail $ pack xs)
     else [x]:(pack xs)
+
+-- Problem 10: Encode duplicates using solution to problem 09
+encode :: (Eq a) => [a] -> [(Int, a)]
+encode = map (\l -> (length l, head l)) . pack
