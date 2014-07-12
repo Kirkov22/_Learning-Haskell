@@ -31,3 +31,29 @@ decode' :: [Result a] -> [a]  -- Revisited using concatMap
 decode' = concatMap decoder
   where decoder (Single x)      = [x]
         decoder (Multiple n x)  = replicate n x
+
+-- Problem 13: Directly encode a list using Single/Multiple datatypes
+increment :: Result a -> Result a
+increment (Single x)      = Multiple 2 x
+increment (Multiple n x)  = Multiple (n + 1) x
+
+value :: Result a -> a
+value (Single x)      = x
+value (Multiple n x)  = x
+
+encodeDirect :: (Eq a) => [a] -> [Result a]
+encodeDirect = foldr helper []
+  where
+    helper element list
+      | null list                       = [Single element]
+      | (value . head) list == element  = (increment . head) list : (tail list)
+      | otherwise                       = Single element : list
+
+{- Upon reviewing the solution for this problem, it looks like I misunderstood the
+   constraint of 'directly' computing the encoding. The official solution computes
+   a list of tuples ie (n, x) and then converts that list of tuples into the
+   Single/Mutiple data type.
+
+   My solution does this all in one pass through the list using an extra helper
+   funciton.
+-}
