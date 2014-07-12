@@ -15,7 +15,19 @@ instance (Show a) => Show (Result a) where
   show (Single a) = "Single " ++ (show a)
   show (Multiple x a) = "Multiple " ++ (show x) ++ ' ':(show a)
 
-encodeModified :: (Eq a) => [a] -> [(Result a)]
+encodeModified :: (Eq a) => [a] -> [Result a]
 encodeModified = map modifier . encode
   where modifier (1, x) = Single x
         modifier (n, x) = Multiple n x
+
+-- Problem 12: Decode the result of modified encoding from #11
+decode :: [Result a] => [a]
+decode = foldl (\xs result -> xs ++ (helper result)) []
+  where helper (Single x)      = [x]
+        helper (Multiple 1 x)  = [x]
+        helper (Multiple i x)  = x : helper (Multiple (i - 1) x)
+
+decode' :: [Result a] => [a]  -- Revisited using concatMap
+decode' = concatMap decoder
+  where decoder (Single x)      = [x]
+        decoder (Multiple n x)  = replicate n x
