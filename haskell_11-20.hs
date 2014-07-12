@@ -21,13 +21,13 @@ encodeModified = map modifier . encode
         modifier (n, x) = Multiple n x
 
 -- Problem 12: Decode the result of modified encoding from #11
-decode :: [Result a] => [a]
+decode :: [Result a] -> [a]
 decode = foldl (\xs result -> xs ++ (helper result)) []
   where helper (Single x)      = [x]
         helper (Multiple 1 x)  = [x]
         helper (Multiple i x)  = x : helper (Multiple (i - 1) x)
 
-decode' :: [Result a] => [a]  -- Revisited using concatMap
+decode' :: [Result a] -> [a]  -- Revisited using concatMap
 decode' = concatMap decoder
   where decoder (Single x)      = [x]
         decoder (Multiple n x)  = replicate n x
