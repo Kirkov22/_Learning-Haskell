@@ -57,3 +57,12 @@ encodeDirect = foldr helper []
    My solution does this all in one pass through the list using an extra helper
    funciton.
 -}
+
+-- Problem 14: Duplicate the elements of a list
+dupli :: [a] -> [a]
+dupli []      = []
+dupli (x:xs)  = x:x:(dupli xs)
+
+-- Problem 15: Replicate the elements of a list n times
+repli :: [a] -> Int -> [a]
+repli list n = concat [ replicate n x | x <- list]
