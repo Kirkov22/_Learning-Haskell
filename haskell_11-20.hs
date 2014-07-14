@@ -85,3 +85,13 @@ split list@(x:xs) n | n > 0     = (x : ys, zs)
 
 -- Problem 18: Take a slice of the ith through kth element in a list
 --   Starting index = 1
+slice :: [a] -> Int -> Int -> [a]
+slice list start stop = slice' list start stop 1
+  where  
+    slice' []          _     _    _     = []
+    slice' list@(x:xs) start stop index 
+      | index > stop = []
+      | index >= start = x : slice' xs start stop  (index + 1)
+      | otherwise = slice' xs start stop (index + 1)
+
+                                            
