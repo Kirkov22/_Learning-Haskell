@@ -101,3 +101,12 @@ rotate l  0 = l
 rotate list@(x:xs) n
   | n < 0 = rotate list (length list + n)
   | otherwise = rotate (xs ++ [x]) (n - 1)
+
+-- Problem 20: Remove the nth element from a list and return it along w/ residue
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n list = removeAt' n list 1 []
+  where
+    removeAt' 0 _           _     _       = error "Invalid index"
+    removeAt' _ []          _     _       = error "Empty list"
+    removeAt' n list@(x:xs) index residue | n == index      = (x, residue ++ xs)
+                                          | otherwise       = removeAt' n xs (index + 1) (residue ++ [x])
