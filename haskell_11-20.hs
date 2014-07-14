@@ -55,7 +55,7 @@ encodeDirect = foldr helper []
    Single/Mutiple data type.
 
    My solution does this all in one pass through the list using an extra helper
-   funciton.
+   function.
 -}
 
 -- Problem 14: Duplicate the elements of a list
@@ -66,3 +66,22 @@ dupli (x:xs)  = x:x:(dupli xs)
 -- Problem 15: Replicate the elements of a list n times
 repli :: [a] -> Int -> [a]
 repli list n = concat [ replicate n x | x <- list]
+
+-- Problem 16: Drop every nth element of a list
+dropEvery :: [a] -> Int -> [a]
+dropEvery xs n = dropEvery' xs n 1
+
+dropEvery' :: [a] -> Int -> Int -> [a]
+dropEvery' []          _ _    = []
+dropEvery' list@(x:xs) n sum  | mod sum n == 0  = dropEvery' xs n (sum + 1)
+                              | otherwise       = x : dropEvery' xs n (sum + 1)
+
+-- Problem 17: Split a list into two pieces given a size for the first
+split :: [a] -> Int -> ([a], [a])
+split []          _ = ([], [])
+split list@(x:xs) n | n > 0     = (x : ys, zs)
+                    | otherwise = ([], list)
+  where (ys, zs) = split xs (n - 1)
+
+-- Problem 18: Take a slice of the ith through kth element in a list
+--   Starting index = 1
