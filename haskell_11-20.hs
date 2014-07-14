@@ -94,4 +94,10 @@ slice list start stop = slice' list start stop 1
       | index >= start = x : slice' xs start stop  (index + 1)
       | otherwise = slice' xs start stop (index + 1)
 
-                                            
+-- Problem 19: Rotate a list n places to the left
+rotate :: [a] -> Int -> [a]
+rotate [] _ = []
+rotate l  0 = l
+rotate list@(x:xs) n
+  | n < 0 = rotate list (length list + n)
+  | otherwise = rotate (xs ++ [x]) (n - 1)
